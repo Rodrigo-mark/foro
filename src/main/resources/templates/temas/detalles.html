@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/Scripts/bootstrap.bundle.min.js"></script>
+    <link href="/Contener/bootstrap.min.css" rel="stylesheet" />
+    <script src="http://kit.fontawesome.com/13fcee1f2f.js" crossorigin="anonymous"></script>
+    <title>Inicio</title>
+</head>
+<body >
+
+    <!-- (Inicio) Menu de pagina -->
+    <div class="fs-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light bg-opacity-75">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" th:href="@{/usuario/validar}">Cerrar Sesion</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- (Fin) Menu de pagina -->
+    <!-- (Inicio) Titular de Pagina -->
+    <div class="container-fluid" style="font-family: Georgia, 'Times New Roman', Times, serif;">
+        <h1 class="text-center text-muted" th:text="'Replicas de: '+*{tema}"><strong><em></em></strong></h1>
+        <br>
+    </div>
+    <!-- (Fin) Titular de Pagina -->
+    <!-- (Inicio) Contenido de la pagina -->
+    <div class="container">
+        <div class="row">
+        <div class="col-2"></div>
+            <div class="col-8">
+            
+            <div th:if="*{error !=null}" class="alert alert-success alert-dismissible fade show text-center " role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" label="Close">&times;</button>
+            <h4 th:text=*{error}></h4>
+            </div>
+            
+                <!-- (Inicio) Aca ira la tabla -->
+               <div th:if="*{replicas != null}">
+               		<div th:each= "replica : ${replicas}" class="card bg-light bg-opacity-50 text-center">
+               			<h5 th:text="${replica.contenido}"></h5>
+               			<label th:text="'Enviado por: '+${replica.usuario.alias}"></label>
+               		</div>
+               </div>
+                <!--(Fin) Tabla-->
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <br>
+        <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 shadow-lg p-3 mb-5 mt-4 bg-body rounded">
+        <form action="#" th:action="@{/temas/agregarreplica}" th:object="${replica}" method="post" class="row g-3 needs-validation" novalidate>
+                    <fieldset>
+                        <legend class="text-center"><strong>Responder.......</strong></legend>
+
+                        <textarea cols="50" rows="4" required="required" th:field="*{contenido}" class="form-control" placeholder="Maximo 200 caracteres"></textarea>
+                        <input type="hidden" th:field="*{tema}">
+                        <br />
+
+                        <p style="text-align: center;">
+                            <input type="submit" class=" btn btn-primary" value="Comentar" />
+                        </p>
+                    </fieldset>
+                </form>
+        </div>
+        <div class="col-3"></div>
+        </div>
+    </div>
+    <!-- (Fin) Contenido de la pagina -->
+</body>
+</html>
